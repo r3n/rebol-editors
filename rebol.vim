@@ -4,7 +4,6 @@
 " Filenames:	*.r
 " Last Change:	27th June 2002
 " URL:		http://www.eandem.co.uk/mrw/vim
-"
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -70,14 +69,14 @@ syn match       rebolEmail      "\<\k\+@\(\k\+\.\)*\k\+\>"
 syn match       rebolFile       "%\(\k\+/\)*\k\+[/]\=" contains=rebolSpecialCharacter
 syn region      rebolFile       oneline start=+%"+ end=+"+ contains=rebolSpecialCharacter
 " URLs
-syn match	rebolURL	"http://\k\+\(\.\k\+\)*\(:\d\+\)\=\(/\(\k\+/\)*\(\k\+\)\=\)*"
-syn match	rebolURL	"file://\k\+\(\.\k\+\)*/\(\k\+/\)*\k\+"
-syn match	rebolURL	"ftp://\(\k\+:\k\+@\)\=\k\+\(\.\k\+\)*\(:\d\+\)\=/\(\k\+/\)*\k\+"
-syn match	rebolURL	"mailto:\k\+\(\.\k\+\)*@\k\+\(\.\k\+\)*"
+syn match       rebolURL        "http://\k\+\(\.\k\+\)*\(:\d\+\)\=\(/\(\k\+/\)*\(\k\+\)\=\)*"
+syn match       rebolURL        "file://\k\+\(\.\k\+\)*/\(\k\+/\)*\k\+"
+syn match       rebolURL        "ftp://\(\k\+:\k\+@\)\=\k\+\(\.\k\+\)*\(:\d\+\)\=/\(\k\+/\)*\k\+"
+syn match       rebolURL        "mailto:\k\+\(\.\k\+\)*@\k\+\(\.\k\+\)*"
 " Issues
-syn match	rebolIssue	"#\(\d\+-\)*\d\+"
+syn match       rebolIssue      "#\(\d\+-\)*\d\+"
 " Tuples
-syn match	rebolTuple	"\(\d\+\.\)\{2,}"
+syn match       rebolTuple      "\(\d\+\.\)\{2,}"
 
 " Characters
 syn match       rebolSpecialCharacter contained "\^[^[:space:][]"
@@ -142,7 +141,6 @@ syn keyword     rebolStatement  func function free
 
 " Constants
 syn keyword     rebolConstant   none
-
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already

@@ -1,24 +1,30 @@
 " Vim syntax file
 " Language:	Rebol
-" Maintainer:	Mike Williams <mrw@netcomuk.co.uk>
+" Maintainer:	Mike Williams <mrw@eandem.co.uk>
 " Filenames:	*.r
-" Last Change:	2001 May 09
-" URL:		N/A
+" Last Change:	27th June 2002
+" URL:		http://www.eandem.co.uk/mrw/vim
 
 " Changes-by: Barry Walsh <draegtun@gmail.com>
 " Last updated: 17-May-2013
 
-if exists("b:current_syntax")
-      finish
+" For version 5.x: Clear all syntax items
+" For version 6.x: Quit when a syntax file was already loaded
+if version < 600
+  syntax clear
+elseif exists("b:current_syntax")
+  finish
 endif
-
 
 " Rebol is case insensitive
 syn case ignore
 
 " As per current users documentation
-setlocal isk=@,48-57,?,!,.,',+,-,*,&,\|,=,_,~,/,<,>
-"setlocal iskeyword+=:
+if version < 600
+  set isk=@,48-57,?,!,.,',+,-,*,&,\|,=,_,~
+else
+  setlocal isk=@,48-57,?,!,.,',+,-,*,&,\|,=,_,~
+endif
 
 " Yer TODO highlighter
 syn keyword	rebolTodo	contained TODO
@@ -163,64 +169,69 @@ syn keyword     rebolTag        <td> </td> <tr> </tr>
 
 """""""""""""""""""""""""""
 
-command -nargs=+ HiLink hi def link <args>
-"HiLink rebolStatement Statement
-"HiLink rebolWordGet   Function
-"HiLink rebolString    String
+" Define the default highlighting.
+" For version 5.7 and earlier: only when not done already
+" For version 5.8 and later: only when an item doesn't have highlighting yet
+if version >= 508 || !exists("did_rebol_syntax_inits")
+  if version < 508
+    let did_rebol_syntax_inits = 1
+    command -nargs=+ HiLink hi link <args>
+  else
+    command -nargs=+ HiLink hi def link <args>
+  endif
 
+  HiLink rebolTodo     Todo
 
-HiLink rebolTodo     Todo
+  HiLink rebolStatement Statement
+  "HiLink rebolLabel	Label
+  HiLink rebolConditional Conditional
+  HiLink rebolRepeat	Repeat
 
-HiLink rebolStatement Statement
-"HiLink rebolLabel	Label
-HiLink rebolConditional Conditional
-HiLink rebolRepeat	Repeat
+  HiLink rebolOperator	Operator
+  HiLink rebolLogicOperator rebolOperator
+  HiLink rebolLogicFunction rebolLogicOperator
+  HiLink rebolMathOperator rebolOperator
+  HiLink rebolMathFunction rebolMathOperator
+  HiLink rebolBinaryOperator rebolOperator
+  HiLink rebolBinaryFunction rebolBinaryOperator
 
-HiLink rebolOperator	Operator
-HiLink rebolLogicOperator rebolOperator
-HiLink rebolLogicFunction rebolLogicOperator
-HiLink rebolMathOperator rebolOperator
-HiLink rebolMathFunction rebolMathOperator
-HiLink rebolBinaryOperator rebolOperator
-HiLink rebolBinaryFunction rebolBinaryOperator
+  HiLink rebolType     Type
+  HiLink rebolTypeFunction rebolOperator
 
-HiLink rebolType     Type
-HiLink rebolTypeFunction rebolOperator
+  "HiLink rebolWord     Identifier
+  "HiLink rebolWordPath rebolWord
+  "HiLink rebolFunction	Function
 
-"HiLink rebolWord     Identifier
-"HiLink rebolWordPath rebolWord
-"HiLink rebolFunction	Function
+  HiLink rebolCharacter Character
+  HiLink rebolSpecialCharacter SpecialChar
+  HiLink rebolString	String
 
-HiLink rebolCharacter Character
-HiLink rebolSpecialCharacter SpecialChar
-HiLink rebolString	String
+  HiLink rebolNumber   Number
+  HiLink rebolInteger  rebolNumber
+  HiLink rebolDecimal  rebolNumber
+  HiLink rebolTime     rebolNumber
+  HiLink rebolDate     rebolNumber
+  HiLink rebolMoney    rebolNumber
+  HiLink rebolBinary   rebolNumber
+  HiLink rebolEmail    Identifier
+  HiLink rebolFile     Identifier
+  HiLink rebolURL      Identifier
+  HiLink rebolIssue    rebolNumber
+  HiLink rebolTuple    rebolNumber
+  HiLink rebolFloat    Float
+  HiLink rebolBoolean  Boolean
+  HiLink rebolTag      Identifier
 
-HiLink rebolNumber   Number
-HiLink rebolInteger  rebolNumber
-HiLink rebolDecimal  rebolNumber
-HiLink rebolTime     rebolNumber
-HiLink rebolDate     rebolNumber
-HiLink rebolMoney    rebolNumber
-HiLink rebolBinary   rebolNumber
-HiLink rebolEmail    Identifier
-HiLink rebolFile     Identifier
-HiLink rebolURL      Identifier
-HiLink rebolIssue    rebolNumber
-HiLink rebolTuple    rebolNumber
-HiLink rebolFloat    Float
-HiLink rebolBoolean  Boolean
-HiLink rebolTag      Identifier
+  HiLink rebolConstant Constant
 
-HiLink rebolConstant Constant
+  HiLink rebolComment	Comment
 
-HiLink rebolComment	Comment
+  HiLink rebolError	Error
 
-HiLink rebolError	Error
+  HiLink rebolWordGet   Function
+  HiLink rebolWordLit   String
 
-HiLink rebolWordGet   Function
-HiLink rebolWordLit   String
-
-
-delcommand HiLink
+  delcommand HiLink
+endif
 
 let b:current_syntax = "rebol"
