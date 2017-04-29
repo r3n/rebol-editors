@@ -5,6 +5,9 @@
 " Last Change:	27th June 2002
 " URL:		http://www.eandem.co.uk/mrw/vim
 
+" Changes-by: Barry Walsh <draegtun@gmail.com>
+" Last updated: 17-May-2013
+
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
 if version < 600
@@ -32,6 +35,8 @@ syn match       rebolComment    ";.*$" contains=rebolTodo
 " Words
 syn match       rebolWord       "\a\k*"
 syn match       rebolWordPath   "[^[:space:]]/[^[:space]]"ms=s+1,me=e-1
+syn match       rebolWordGet    "\a\k*\:"
+syn match       rebolWordLit    "\'\k*"
 
 " Booleans
 syn keyword     rebolBoolean    true false on off yes no
@@ -77,6 +82,8 @@ syn match       rebolURL        "mailto:\k\+\(\.\k\+\)*@\k\+\(\.\k\+\)*"
 syn match       rebolIssue      "#\(\d\+-\)*\d\+"
 " Tuples
 syn match       rebolTuple      "\(\d\+\.\)\{2,}"
+" Tags
+"syn region      rebolTag       oneline start=+<\a+ end=+>+ contains=rebolComment
 
 " Characters
 syn match       rebolSpecialCharacter contained "\^[^[:space:][]"
@@ -88,15 +95,16 @@ syn match       rebolSpecialCharacter contained "%\d\+"
 syn match       rebolMathOperator  "\(\*\{1,2}\|+\|-\|/\{1,2}\)"
 syn keyword     rebolMathFunction  abs absolute add arccosine arcsine arctangent cosine
 syn keyword     rebolMathFunction  divide exp log-10 log-2 log-e max maximum min
-syn keyword     rebolMathFunction  minimum multiply negate power random remainder sine
+syn keyword     rebolMathFunction  minimum multiply negate power remainder sine
 syn keyword     rebolMathFunction  square-root subtract tangent
+syn keyword     rebolMathFunction  random random/seed
 " Binary operators
 syn keyword     rebolBinaryOperator complement and or xor ~
 " Logic operators
 syn match       rebolLogicOperator "[<>=]=\="
 syn match       rebolLogicOperator "<>"
 syn keyword     rebolLogicOperator not
-syn keyword     rebolLogicFunction all any
+syn keyword     rebolLogicFunction all any some
 syn keyword     rebolLogicFunction head? tail?
 syn keyword     rebolLogicFunction negative? positive? zero? even? odd?
 syn keyword     rebolLogicFunction binary? block? char? date? decimal? email? empty?
@@ -104,6 +112,8 @@ syn keyword     rebolLogicFunction file? found? function? integer? issue? logic?
 syn keyword     rebolLogicFunction native? none? object? paren? path? port? series?
 syn keyword     rebolLogicFunction string? time? tuple? url? word?
 syn keyword     rebolLogicFunction exists? input? same? value?
+" Conversions
+syn keyword     rebolStatement     to-integer to-string
 
 " Datatypes
 syn keyword     rebolType       binary! block! char! date! decimal! email! file!
@@ -114,19 +124,25 @@ syn keyword     rebolTypeFunction type?
 
 " Control statements
 syn keyword     rebolStatement  break catch exit halt reduce return shield
-syn keyword     rebolConditional if else
+syn keyword     rebolConditional if else either
 syn keyword     rebolRepeat     for forall foreach forskip loop repeat while until do
 
 " Series statements
-syn keyword     rebolStatement  change clear copy fifth find first format fourth free
-syn keyword     rebolStatement  func function head insert last match next parse past
+syn keyword     rebolStatement  change change/part
+syn keyword     rebolStatement  copy copy/part
+syn keyword     rebolStatement  clear fifth find first format fourth free
+syn keyword     rebolStatement  func function head insert last match next back parse parse/all past
 syn keyword     rebolStatement  pick remove second select skip sort tail third trim length?
+syn keyword     rebolStatement  append append/only map-each remove-each 
+syn keyword     rebolStatement  reverse replace replace/all compose compose/deep
+syn keyword     rebolStatement  collect take
+
 
 " Context
-syn keyword     rebolStatement  alias bind use
+syn keyword     rebolStatement  alias bind use context
 
 " Object
-syn keyword     rebolStatement  import make make-object rebol info?
+syn keyword     rebolStatement  import make make-object rebol info? in
 
 " I/O statements
 syn keyword     rebolStatement  delete echo form format import input load mold prin
@@ -137,10 +153,21 @@ syn keyword     rebolOperator   size? modified?
 syn keyword     rebolStatement  help probe trace
 
 " Misc statements
-syn keyword     rebolStatement  func function free
+syn keyword     rebolStatement  free get set
+
+" Parse statements
+syn keyword     rebolStatement  thru to
 
 " Constants
 syn keyword     rebolConstant   none
+
+" Tags
+syn keyword     rebolTag        <td> </td> <tr> </tr>
+
+" Experiments of mine!
+"syn match       rebolFuncStatement  "func\s\["
+
+"""""""""""""""""""""""""""
 
 " Define the default highlighting.
 " For version 5.7 and earlier: only when not done already
@@ -156,7 +183,7 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolTodo     Todo
 
   HiLink rebolStatement Statement
-  HiLink rebolLabel	Label
+  "HiLink rebolLabel	Label
   HiLink rebolConditional Conditional
   HiLink rebolRepeat	Repeat
 
@@ -171,9 +198,9 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolType     Type
   HiLink rebolTypeFunction rebolOperator
 
-  HiLink rebolWord     Identifier
-  HiLink rebolWordPath rebolWord
-  HiLink rebolFunction	Function
+  "HiLink rebolWord     Identifier
+  "HiLink rebolWordPath rebolWord
+  "HiLink rebolFunction	Function
 
   HiLink rebolCharacter Character
   HiLink rebolSpecialCharacter SpecialChar
@@ -186,13 +213,14 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolDate     rebolNumber
   HiLink rebolMoney    rebolNumber
   HiLink rebolBinary   rebolNumber
-  HiLink rebolEmail    rebolString
-  HiLink rebolFile     rebolString
-  HiLink rebolURL      rebolString
+  HiLink rebolEmail    Identifier
+  HiLink rebolFile     Identifier
+  HiLink rebolURL      Identifier
   HiLink rebolIssue    rebolNumber
   HiLink rebolTuple    rebolNumber
   HiLink rebolFloat    Float
   HiLink rebolBoolean  Boolean
+  HiLink rebolTag      Identifier
 
   HiLink rebolConstant Constant
 
@@ -200,15 +228,10 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   HiLink rebolError	Error
 
+  HiLink rebolWordGet   Function
+  HiLink rebolWordLit   String
+
   delcommand HiLink
 endif
 
-if exists("my_rebol_file")
-  if file_readable(expand(my_rebol_file))
-    execute "source " . my_rebol_file
-  endif
-endif
-
 let b:current_syntax = "rebol"
-
-" vim: ts=8
