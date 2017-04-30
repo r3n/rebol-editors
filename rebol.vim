@@ -104,48 +104,55 @@ syn keyword     rebolBinaryOperator complement and or xor ~
 syn match       rebolLogicOperator "[<>=]=\="
 syn match       rebolLogicOperator "<>"
 syn keyword     rebolLogicOperator not
-syn keyword     rebolLogicFunction all any some
-syn keyword     rebolLogicFunction head? tail?
+syn keyword     rebolLogicFunction all attempt any maybe some trap try
+syn keyword     rebolLogicFunction dir? head? tail?
 syn keyword     rebolLogicFunction negative? positive? zero? even? odd?
-syn keyword     rebolLogicFunction binary? block? char? date? decimal? email? empty?
-syn keyword     rebolLogicFunction file? found? function? integer? issue? logic? money?
-syn keyword     rebolLogicFunction native? none? object? paren? path? port? series?
-syn keyword     rebolLogicFunction string? time? tuple? url? word?
+syn keyword     rebolLogicFunction binary? block? char? date? decimal? email? empty? error?
+syn keyword     rebolLogicFunction file? found? function? integer? issue? lit-word? logic? money? 
+syn keyword     rebolLogicFunction native? none? number? object? paren? path? port? refinement? series?
+syn keyword     rebolLogicFunction set-word? string? tag? time? tuple? url? word?
 syn keyword     rebolLogicFunction exists? input? same? value?
+
 " Conversions
-syn keyword     rebolStatement     to-integer to-string
+syn keyword     rebolStatement      to-file to-integer to-issue to-string to-tag to-word
 
 " Datatypes
-syn keyword     rebolType       binary! block! char! date! decimal! email! file!
-syn keyword     rebolType       function! integer! issue! logic! money! native!
-syn keyword     rebolType       none! object! paren! path! port! string! time!
+syn keyword     rebolType       any-number! any-string! any-value! any-word!
+syn keyword     rebolType       binary! blank! block! char! date! decimal! email! file!
+syn keyword     rebolType       function! integer! issue! logic! map!  money! native!
+syn keyword     rebolType       none! object! paren! path! port! string! tag! time!
 syn keyword     rebolType       tuple! url! word!
 syn keyword     rebolTypeFunction type?
 
 " Control statements
-syn keyword     rebolStatement  break catch exit halt reduce return shield
-syn keyword     rebolConditional if else either
-syn keyword     rebolRepeat     for forall foreach forskip loop repeat while until do
+syn keyword     rebolStatement apply attempt break catch do exit halt leave reduce return shield
+syn keyword     rebolConditional if case default either else switch
+syn keyword     rebolRepeat     for for-each for-skip forall foreach forskip loop repeat while until
 
 " Series statements
 syn keyword     rebolStatement  change change/part
 syn keyword     rebolStatement  copy copy/part
 syn keyword     rebolStatement  clear fifth find first format fourth free
-syn keyword     rebolStatement  func function head insert last match next back parse parse/all past
-syn keyword     rebolStatement  pick remove second select skip sort tail third trim length?
-syn keyword     rebolStatement  append append/only map-each remove-each 
+syn keyword     rebolStatement  head insert last match next new-line back parse parse/all past
+syn keyword     rebolStatement  pick remove second select skip sort tail third trim length
+syn keyword     rebolStatement  append append/only join join-of map-each remove-each 
 syn keyword     rebolStatement  reverse replace replace/all compose compose/deep
 syn keyword     rebolStatement  collect take
 
+" String
+syn keyword     rebolStatement  ajoin delimit form lowercase mold spaced split unspaced uppercase
 
 " Context
 syn keyword     rebolStatement  alias bind use context
+
+" Function
+syn keyword     rebolStatement  adapt chain does func function hijack proc procedure specialize
 
 " Object
 syn keyword     rebolStatement  import make make-object rebol info? in
 
 " I/O statements
-syn keyword     rebolStatement  delete echo form format import input load mold prin
+syn keyword     rebolStatement  delete echo format import input load
 syn keyword     rebolStatement  print probe read save secure send write
 syn keyword     rebolOperator   size? modified?
 
@@ -156,10 +163,13 @@ syn keyword     rebolStatement  help probe trace
 syn keyword     rebolStatement  free get set
 
 " Parse statements
-syn keyword     rebolStatement  thru to
+syn keyword     rebolStatement  opt thru to
+
+" Chars
+syn keyword     rebolStatement  charset newline space 
 
 " Constants
-syn keyword     rebolConstant   none
+syn keyword     rebolConstant   blank
 
 " Tags
 syn keyword     rebolTag        <td> </td> <tr> </tr>
