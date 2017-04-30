@@ -29,6 +29,9 @@ endif
 " Yer TODO highlighter
 syn keyword	rebolTodo	contained TODO
 
+" Delimiters
+syn match       rebolDelimiter  "[][(|)]"
+
 " Comments
 syn match       rebolComment    ";.*$" contains=rebolTodo
 
@@ -240,6 +243,8 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   HiLink rebolWordGet   Function
   HiLink rebolWordLit   String
+
+  HiLink rebolDelimiter Delimiter
 
   delcommand HiLink
 endif
