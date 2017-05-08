@@ -68,7 +68,7 @@ syn match       rebolDate       "\d\{1,2}\.\d\{1,2}\.\d\{4}\>"
 syn match       rebolMoney      "\a*\$\d\+\('\d*\)*\([,.]\d\+\)\="
 " Strings
 syn region      rebolString     oneline start=+"+ skip=+^"+ end=+"+ contains=rebolSpecialCharacter
-syn region      rebolString     start=+[^#]{+ end=+}+ skip=+{[^}]*}+ contains=rebolSpecialCharacter
+syn region      rebolString     start=+{+ end=+}+ skip=+{[^}]*}+ contains=rebolSpecialCharacter
 " Binary
 syn region      rebolBinary     start=+\d*#{+ end=+}+ contains=rebolComment
 " Email
