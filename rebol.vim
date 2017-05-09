@@ -38,7 +38,7 @@ syn match       rebolComment    ";.*$" contains=rebolTodo
 " Words
 syn match       rebolWord       "\a\k*"
 syn match       rebolWordPath   "[^[:space:]]/[^[:space]]"ms=s+1,me=e-1
-syn match       rebolWordGet    "\a\k*\:"
+syn match       rebolWordSet    "\a\k*\:"
 syn match       rebolWordLit    "\'\k*"
 
 " Booleans
@@ -85,9 +85,6 @@ syn match       rebolURL        "mailto:\k\+\(\.\k\+\)*@\k\+\(\.\k\+\)*"
 syn match       rebolIssue      "#\(\d\+-\)*\d\+"
 " Tuples
 syn match       rebolTuple      "\(\d\+\.\)\{2,}"
-" Tags
-"syn region      rebolTag       oneline start=+<\a+ end=+>+ contains=rebolComment
-
 " Characters
 syn match       rebolSpecialCharacter contained "\^[^[:space:][]"
 syn match       rebolSpecialCharacter contained "%\d\+"
@@ -175,7 +172,8 @@ syn keyword     rebolStatement  charset newline space
 syn keyword     rebolConstant   blank
 
 " Tags
-syn keyword     rebolTag        <td> </td> <tr> </tr>
+syn region      rebolTag       oneline start=+<\a+ end=+>+ contains=rebolComment
+
 
 " Experiments of mine!
 "syn match       rebolFuncStatement  "func\s\["
@@ -226,14 +224,14 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolDate     rebolNumber
   HiLink rebolMoney    rebolNumber
   HiLink rebolBinary   rebolNumber
-  HiLink rebolEmail    Identifier
-  HiLink rebolFile     Identifier
-  HiLink rebolURL      Identifier
+  HiLink rebolEmail    String
+  HiLink rebolFile     String
+  HiLink rebolURL      String
   HiLink rebolIssue    rebolNumber
   HiLink rebolTuple    rebolNumber
   HiLink rebolFloat    Float
   HiLink rebolBoolean  Boolean
-  HiLink rebolTag      Identifier
+  HiLink rebolTag      String
 
   HiLink rebolConstant Constant
 
@@ -241,7 +239,7 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   HiLink rebolError	Error
 
-  HiLink rebolWordGet   Function
+  HiLink rebolWordSet   Function
   HiLink rebolWordLit   String
 
   HiLink rebolDelimiter Delimiter
