@@ -67,8 +67,8 @@ syn match       rebolDate       "\d\{1,2}\.\d\{1,2}\.\d\{4}\>"
 " Money
 syn match       rebolMoney      "\a*\$\d\+\('\d*\)*\([,.]\d\+\)\="
 " Strings
-syn region      rebolString     oneline start=+"+ skip=+^"+ end=+"+ contains=rebolSpecialCharacter
-syn region      rebolString     start=+{+ end=+}+ skip=+{[^}]*}+ contains=rebolSpecialCharacter
+syn region      rebolString1     oneline start=+"+ skip=+\^"+ end=+"+ contains=rebolSpecialCharacter,remMarkdownCharacter
+syn region      rebolString2     start=+{+ end=+}+ skip=+\^}+ contains=rebolSpecialCharacter,remMarkdownCharacter,rebolString2
 " Binary
 syn region      rebolBinary     start=+\d*#{+ end=+}+ contains=rebolComment
 " Email
@@ -215,7 +215,8 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   HiLink rebolCharacter Character
   HiLink rebolSpecialCharacter SpecialChar
-  HiLink rebolString	String
+  HiLink rebolString1	String
+  HiLink rebolString2	String
 
   HiLink rebolNumber   Number
   HiLink rebolInteger  rebolNumber
