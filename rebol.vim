@@ -41,9 +41,6 @@ syn match       rebolWordPath   "[^[:space:]]/[^[:space]]"ms=s+1,me=e-1
 syn match       rebolWordSet    "\a\k*\:"
 syn match       rebolWordLit    "\'\k*"
 
-" Booleans
-syn keyword     rebolBoolean    true false on off yes no
-
 " Values
 " Integers
 syn match       rebolInteger    "\<[+-]\=\d\+\('\d*\)*\>"
@@ -93,83 +90,9 @@ syn match       rebolSpecialCharacter contained "%\d\+"
 " Operators
 " Math operators
 syn match       rebolMathOperator  "\(\*\{1,2}\|+\|-\|/\{1,2}\)"
-syn keyword     rebolMathFunction  abs absolute add arccosine arcsine arctangent cosine
-syn keyword     rebolMathFunction  divide exp log-10 log-2 log-e max maximum min
-syn keyword     rebolMathFunction  minimum multiply negate power remainder sine
-syn keyword     rebolMathFunction  square-root subtract tangent
-syn keyword     rebolMathFunction  random random/seed
 " Binary operators
-syn keyword     rebolBinaryOperator complement and or xor ~
-" Logic operators
 syn match       rebolLogicOperator "[<>=]=\="
 syn match       rebolLogicOperator "<>"
-syn keyword     rebolLogicOperator not
-syn keyword     rebolLogicFunction all attempt any maybe some trap try
-syn keyword     rebolLogicFunction dir? head? tail?
-syn keyword     rebolLogicFunction negative? positive? zero? even? odd?
-syn keyword     rebolLogicFunction binary? block? char? date? decimal? email? empty? error?
-syn keyword     rebolLogicFunction file? found? function? integer? issue? lit-word? logic? money? 
-syn keyword     rebolLogicFunction native? none? number? object? paren? path? port? refinement? series?
-syn keyword     rebolLogicFunction set-word? string? tag? time? tuple? url? word?
-syn keyword     rebolLogicFunction exists? input? same? value?
-
-" Conversions
-syn keyword     rebolStatement      to-file to-integer to-issue to-string to-tag to-word
-
-" Datatypes
-syn keyword     rebolType       any-number! any-string! any-value! any-word!
-syn keyword     rebolType       binary! blank! block! char! date! decimal! email! file!
-syn keyword     rebolType       function! integer! issue! logic! map!  money! native!
-syn keyword     rebolType       none! object! paren! path! port! string! tag! time!
-syn keyword     rebolType       tuple! url! word!
-syn keyword     rebolTypeFunction type?
-
-" Control statements
-syn keyword     rebolStatement apply attempt break catch do exit halt leave reduce return shield
-syn keyword     rebolConditional if case default either else switch
-syn keyword     rebolRepeat     for for-each for-skip forall foreach forskip loop repeat while until
-
-" Series statements
-syn keyword     rebolStatement  change change/part
-syn keyword     rebolStatement  copy copy/part
-syn keyword     rebolStatement  clear fifth find first format fourth free
-syn keyword     rebolStatement  head insert last match next new-line back parse parse/all past
-syn keyword     rebolStatement  pick remove second select skip sort tail third trim length
-syn keyword     rebolStatement  append append/only join join-of map-each remove-each 
-syn keyword     rebolStatement  reverse replace replace/all compose compose/deep
-syn keyword     rebolStatement  collect take
-
-" String
-syn keyword     rebolStatement  ajoin delimit form lowercase mold spaced split unspaced uppercase
-
-" Context
-syn keyword     rebolStatement  alias bind use context
-
-" Function
-syn keyword     rebolStatement  adapt chain does func function hijack proc procedure specialize
-
-" Object
-syn keyword     rebolStatement  import make make-object rebol info? in
-
-" I/O statements
-syn keyword     rebolStatement  delete echo format import input load
-syn keyword     rebolStatement  print probe read save secure send write
-syn keyword     rebolOperator   size? modified?
-
-" Debug statement
-syn keyword     rebolStatement  help probe trace
-
-" Misc statements
-syn keyword     rebolStatement  free get set
-
-" Parse statements
-syn keyword     rebolStatement  opt thru to
-
-" Chars
-syn keyword     rebolStatement  charset newline space 
-
-" Constants
-syn keyword     rebolConstant   blank
 
 " Tags
 syn region      rebolTag       oneline start=+<\a+ end=+>+ contains=rebolComment
@@ -193,27 +116,12 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   HiLink rebolTodo     Todo
 
-  HiLink rebolStatement Statement
-  "HiLink rebolLabel	Label
-  HiLink rebolConditional Conditional
-  HiLink rebolRepeat	Repeat
+  HiLink rebolKW Statement
 
   HiLink rebolOperator	Operator
   HiLink rebolLogicOperator rebolOperator
-  HiLink rebolLogicFunction rebolLogicOperator
   HiLink rebolMathOperator rebolOperator
-  HiLink rebolMathFunction rebolMathOperator
   HiLink rebolBinaryOperator rebolOperator
-  HiLink rebolBinaryFunction rebolBinaryOperator
-
-  HiLink rebolType     Type
-  HiLink rebolTypeFunction rebolOperator
-
-  "HiLink rebolWord     Identifier
-  "HiLink rebolWordPath rebolWord
-  "HiLink rebolFunction	Function
-
-  HiLink rebolCharacter Character
   HiLink rebolSpecialCharacter SpecialChar
   HiLink rebolString1	String
   HiLink rebolString2	String
@@ -234,11 +142,9 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolBoolean  Boolean
   HiLink rebolTag      String
 
-  HiLink rebolConstant Constant
 
   HiLink rebolComment	Comment
 
-  HiLink rebolError	Error
 
   HiLink rebolWordSet   Function
   HiLink rebolWordLit   String
@@ -247,5 +153,18 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
 
   delcommand HiLink
 endif
+
+syntax keyword rebolKW abs absolute adapt add ajoin alias all and any any-number! any-string! any-value! any-word! append append/only apply arccosine arcsine arctangent attempt attempt back
+syntax keyword rebolKW binary! binary? bind blank blank! block! block? break case catch chain change change/part char! char? charset clear collect complement compose compose/deep
+syntax keyword rebolKW context copy copy/part cosine date! date? decimal! decimal? default delete delimit dir? divide do does echo either else email! email? empty?
+syntax keyword rebolKW error? even? exists? exit exp false fifth file! file? find first for for-each for-skip forall foreach form format format forskip found?
+syntax keyword rebolKW fourth free free func function function! function? get halt head head? help hijack if import import in info? input input? insert
+syntax keyword rebolKW integer! integer? issue! issue? join join-of last leave length lit-word? load log-10 log-2 log-e logic! logic? loop lowercase make make-object map!
+syntax keyword rebolKW map-each match max maximum maybe min minimum modified? mold money! money? multiply native! native? negate negative? new-line newline next no none!
+syntax keyword rebolKW none? not number? object! object? odd? off on opt or paren! paren? parse parse/all past path! path? pick port! port? positive?
+syntax keyword rebolKW power print probe probe proc procedure random random/seed read rebol reduce refinement? remainder remove remove-each repeat replace replace/all return reverse same?
+syntax keyword rebolKW save second secure select send series? set set-word? shield sine size? skip some sort space spaced specialize split square-root string! string?
+syntax keyword rebolKW subtract switch tag! tag? tail tail? take tangent third thru time! time? to to-file to-integer to-issue to-string to-tag to-word trace trap
+syntax keyword rebolKW trim true try tuple! tuple? type? unspaced until uppercase url! url? use value? while word! word? write xor yes zero? 
 
 let b:current_syntax = "rebol"
