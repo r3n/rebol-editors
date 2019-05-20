@@ -34,7 +34,6 @@ syn match       rebolDelimiter  "[][(/|)]"
 
 " Comments
 syn match       rebolComment    ";.*$" contains=rebolTodo
-syn match       rebolComment    "[ \t]//.*$" contains=rebolTodo
 
 " Words
 syn match       rebolWord       "\a\k*"
@@ -65,8 +64,8 @@ syn match       rebolDate       "\d\{1,2}\.\d\{1,2}\.\d\{4}\>"
 " Money
 syn match       rebolMoney      "\a*\$\d\+\('\d*\)*\([,.]\d\+\)\="
 " Strings
-syn region      rebolString1     oneline start=+"+ skip=+\^"+ end=+"+ contains=rebolSpecialCharacter,remMarkdownCharacter
-syn region      rebolString2     start=+{+ end=+}+ skip=+\^}+ contains=rebolSpecialCharacter,remMarkdownCharacter,rebolString2
+syn region      rebolString1     oneline start=+"+ skip=+\^"+ end=+"+ contains=rebolSpecialCharacter
+syn region      rebolString2     start=+{+ end=+}+ skip=+\^}+ contains=rebolSpecialCharacter,rebolString2
 " Binary
 syn region      rebolBinary     start=+\d*#{+ end=+}+ contains=rebolComment
 " Email
