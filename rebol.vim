@@ -19,27 +19,25 @@ endif
 " Rebol is case insensitive
 syn case ignore
 
+" Delimiters
+syn match       rebolDelimiter  "[][(/|)@:']"
+
 " As per current users documentation
 if version < 600
-  set isk=@,48-57,?,!,.,',+,-,*,&,\|,=,_,~
+  set isk=@,48-57,?,!,.,+,-,*,&,\|,=,_,~
 else
-  setlocal isk=@,48-57,\<,\>,?,!,.,',+,-,*,&,\|,=,_,~
+  setlocal isk=@,48-57,\<,\>,?,!,.,+,-,*,&,\|,=,_,~
 endif
+
+" Words
+syn match       rebolWord       "\k"
+syn match       rebolWord       "\k\(\k\|[':]\)*\k"
 
 " Yer TODO highlighter
 syn keyword  rebolTodo  contained TODO
 
-" Delimiters
-"syn match       rebolDelimiter  "[][(/|)]"
-
 " Comments
 syn match       rebolComment    ";.*$" contains=rebolTodo
-
-" Words
-syn match       rebolWord       "\a\k*"
-"syn match       rebolWordPath   "[^[:space:]]/[^[:space]]"ms=s+1,me=e-1
-syn match       rebolWordSet    "\a\k*\:"
-syn match       rebolWordLit    "\'\k*"
 
 " Values
 " Integers
@@ -147,8 +145,6 @@ if version >= 508 || !exists("did_rebol_syntax_inits")
   HiLink rebolComment  Comment
 
   HiLink rebolWord      Identifier
-  HiLink rebolWordSet   Function
-  HiLink rebolWordLit   String
 
   HiLink rebolDelimiter Delimiter
 
